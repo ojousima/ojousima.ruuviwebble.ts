@@ -14,13 +14,40 @@ export class AppComponent {
   constructor(private router: Router) {
     this.navLinks = [
         {
+        	disabled: false,
             label: 'Device',
             link: './device',
             index: 0
         }, {
+        	disabled: true,
+            label: 'Acceleration',
+            link: './acceleration',
+            index: 1
+        }, {
+        	disabled: true,
+            label: 'ADC',
+            link: './adc',
+            index: 2
+        }, {
+        	disabled: true,
+            label: 'Environmental',
+            link: './environmental',
+            index: 3
+        }, {
+        	disabled: true,
+            label: 'GPIO',
+            link: './gpio',
+            index: 4
+        }, {
+        	disabled: false,
             label: 'RTC',
             link: './rtc',
-            index: 1
+            index: 5
+        }, {
+        	disabled: true,
+            label: 'NUS',
+            link: './nus',
+            index: 6
         }
     ];
 }
