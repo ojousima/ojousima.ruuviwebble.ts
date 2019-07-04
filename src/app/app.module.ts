@@ -13,6 +13,11 @@ import { AdcComponent } from './adc/adc.component';
 import { GpioComponent } from './gpio/gpio.component';
 import { NusComponent } from './nus/nus.component';
 import { WebBluetoothModule } from '@manekinekko/angular-web-bluetooth';
+import { ManufacturerNameComponent } from './manufacturer-name/manufacturer-name.component';
+import { SerialNumberComponent } from './serial-number/serial-number.component';
+import { HardwareRevisionComponent } from './hardware-revision/hardware-revision.component';
+import { FirmwareRevisionComponent } from './firmware-revision/firmware-revision.component';
+import { ModelNumberComponent } from './model-number/model-number.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +28,12 @@ import { WebBluetoothModule } from '@manekinekko/angular-web-bluetooth';
     EnvironmentalComponent,
     AdcComponent,
     GpioComponent,
-    NusComponent
+    NusComponent,
+    ManufacturerNameComponent,
+    SerialNumberComponent,
+    HardwareRevisionComponent,
+    FirmwareRevisionComponent,
+    ModelNumberComponent
   ],
   imports: [
     BrowserModule,
