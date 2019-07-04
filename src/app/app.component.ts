@@ -44,7 +44,7 @@ export class AppComponent {
             link: './rtc',
             index: 5
         }, {
-        	disabled: true,
+        	disabled: false,
             label: 'NUS',
             link: './nus',
             index: 6
