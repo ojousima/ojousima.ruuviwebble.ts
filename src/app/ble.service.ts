@@ -40,6 +40,14 @@ export class BleService {
     );
   }
 
+  send(data: ArrayBuffer){
+    this.ble.setCharacteristicState(
+      this._config.service,
+      this._config.characteristic,
+      data
+    );
+  }
+
   value() {
     return this.ble
       .value$({

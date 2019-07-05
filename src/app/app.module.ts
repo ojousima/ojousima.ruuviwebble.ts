@@ -18,6 +18,8 @@ import { SerialNumberComponent } from './serial-number/serial-number.component';
 import { HardwareRevisionComponent } from './hardware-revision/hardware-revision.component';
 import { FirmwareRevisionComponent } from './firmware-revision/firmware-revision.component';
 import { ModelNumberComponent } from './model-number/model-number.component';
+import { RxComponent } from './rx/rx.component';
+import { TxComponent } from './tx/tx.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { ModelNumberComponent } from './model-number/model-number.component';
     SerialNumberComponent,
     HardwareRevisionComponent,
     FirmwareRevisionComponent,
-    ModelNumberComponent
+    ModelNumberComponent,
+    RxComponent,
+    TxComponent
   ],
   imports: [
     BrowserModule,

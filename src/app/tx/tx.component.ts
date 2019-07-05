@@ -17,14 +17,17 @@ const PROVIDERS = [{
 }];
 
 @Component({
-  selector: 'app-serial-number',
-  templateUrl: './serial-number.component.html',
-  styleUrls: ['./serial-number.component.css'],
+  selector: 'app-tx',
+  templateUrl: './tx.component.html',
+  styleUrls: ['./tx.component.css'],
   providers: PROVIDERS
 })
-export class SerialNumberComponent implements OnInit {
 
-  serial = null;
+/** TX As in NUS characteristic TX **/
+export class TxComponent implements OnInit {
+
+  /** RX as in received data **/
+  RX = null;
   mode = "determinate";
   color = "primary";
   valuesSubscription: Subscription;
@@ -36,11 +39,12 @@ export class SerialNumberComponent implements OnInit {
     public snackBar: MatSnackBar,
     private ref: ChangeDetectorRef) {
   	service.config({
-      decoder: (value: DataView) => String.fromCharCode.apply(null, new Uint8Array(value.buffer)),
-      service: "device_information",
-      characteristic: "serial_number_string"
+      decoder: (value: DataView) => value,
+      service: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E".toLowerCase(),
+      characteristic: "6E400003-B5A3-F393-E0A9-E50E24DCCA9E".toLowerCase()
     })
   }
+
 
   getDeviceStatus() {
     this.deviceSubscription = this.service.getDevice()
@@ -50,7 +54,7 @@ export class SerialNumberComponent implements OnInit {
         } else {
           // device not connected or disconnected
           this.mode = "indeterminate";
-          this.serial = null;
+          this.RX = null;
         }
       }, this.hasError.bind(this));
   }
@@ -60,8 +64,14 @@ export class SerialNumberComponent implements OnInit {
       .subscribe(this.updateValue.bind(this), this.hasError.bind(this));
   }
 
+  requestStream() {
+    this.streamSubscription = this.service.stream()
+      .subscribe(this.updateValue.bind(this), this.hasError.bind(this));
+  }
+
   updateValue(value: DataView) {
-  	this.serial = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
+  	console.log("data");
+  	this.RX = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
     this.mode = "determinate";
   }
 
@@ -85,5 +95,4 @@ export class SerialNumberComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

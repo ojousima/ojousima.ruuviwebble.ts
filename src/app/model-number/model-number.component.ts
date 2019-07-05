@@ -22,6 +22,7 @@ const PROVIDERS = [{
   styleUrls: ['./model-number.component.css'],
   providers: PROVIDERS
 })
+
 export class ModelNumberComponent implements OnInit {
 
   model = null;
