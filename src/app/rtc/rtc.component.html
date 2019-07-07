@@ -1,1 +1,15 @@
-<p>rtc works!</p>
+<p>
+  <select>
+    <option *ngFor="let destination of destinations">{{destination}}</option>
+  </select>
+  <select>
+	<option *ngFor="let source of sources">{{source}}</option>
+  </select>
+  <select>
+    <option *ngFor="let type of types">{{type}}</option>
+  </select>
+</p>
+
+<p>Current time: {{ time | date}}</p>
+<p>Set time:</p>
+

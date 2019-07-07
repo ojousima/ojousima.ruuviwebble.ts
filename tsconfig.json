@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angular-ruuvi-endpoints": [
+        "dist/angular-ruuvi-endpoints"
+      ],
+      "angular-ruuvi-endpoints/*": [
+        "dist/angular-ruuvi-endpoints/*"
+      ]
+    }
   }
 }

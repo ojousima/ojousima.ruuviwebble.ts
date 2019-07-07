@@ -9,7 +9,7 @@ import { NusComponent } from '../nus/nus.component';
 import { RtcComponent } from '../rtc/rtc.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/device', pathMatch: 'full' },
+  /*{ path: '', redirectTo: '/device', pathMatch: 'full' },*/
   { path: 'acceleration', component:  AccelerationComponent},
   { path: 'adc', component:  AdcComponent},
   { path: 'device', component:  DeviceComponent},

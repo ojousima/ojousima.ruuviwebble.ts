@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { map, mergeMap } from 'rxjs/operators';
 import { BleService } from '../ble.service';
+import { NusDataService } from '../nus-data.service';
 
 // make sure we get a singleton instance of each service
 const PROVIDERS = [{
@@ -36,7 +37,8 @@ export class RxComponent implements OnInit {
 
   constructor(
     public service: BleService,
-    public snackBar: MatSnackBar) {
+    public snackBar: MatSnackBar,
+    private txSource: NusDataService) {
   	service.config({
       decoder: (value: DataView) => String.fromCharCode.apply(null, new Uint8Array(value.buffer)),
       service: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E".toLowerCase(),
@@ -105,5 +107,6 @@ export class RxComponent implements OnInit {
   }
 
   ngOnInit() {
+  	this.txSource.currentTx.subscribe(tx => this.TX = tx);
   }
 }

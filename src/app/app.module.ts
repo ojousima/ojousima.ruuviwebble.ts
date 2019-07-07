@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { AppComponent } from './app.component';
 import { DeviceComponent } from './device/device.component';
@@ -20,6 +21,8 @@ import { FirmwareRevisionComponent } from './firmware-revision/firmware-revision
 import { ModelNumberComponent } from './model-number/model-number.component';
 import { RxComponent } from './rx/rx.component';
 import { TxComponent } from './tx/tx.component';
+
+
 
 @NgModule({
   declarations: [

@@ -14,7 +14,7 @@ import { BluetoothCore, BrowserWebBluetooth, ConsoleLoggerService } from '@manek
 type ServiceOptions = {
     characteristic: string;
     service: string,
-    decoder(value: DataView): number | {[key: string]: number}
+    decoder(value: DataView): number | {[key: string]: number} | DataView
 };
 
 @Injectable({

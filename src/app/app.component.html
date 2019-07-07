@@ -4,7 +4,7 @@
     Welcome to {{ title }}!
   </h1>
 </div>
-
+<!--
 <nav mat-tab-nav-bar>
   <a mat-tab-link *ngFor="let link of navLinks"
     [routerLink]="link.link"
@@ -13,5 +13,10 @@
     [active]="activeLink == link"> {{link.label}}
   </a>
 </nav>
-
+-->
+<mat-tab-group>
+  <mat-tab label="Device"><app-device></app-device></mat-tab>
+  <mat-tab label="RTC"><app-rtc></app-rtc></mat-tab>
+  <mat-tab label="NUS"><app-nus></app-nus></mat-tab>
+</mat-tab-group>
 <router-outlet></router-outlet>

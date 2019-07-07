@@ -1,9 +1,11 @@
-import { ChangeDetectorRef, Component, Injectable, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, Input, OnInit, Output } from '@angular/core';
 import { BluetoothCore, BrowserWebBluetooth, ConsoleLoggerService } from '@manekinekko/angular-web-bluetooth';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { map, mergeMap } from 'rxjs/operators';
 import { BleService } from '../ble.service';
+import { NusDataService } from '../nus-data.service';
+
 
 // make sure we get a singleton instance of each service
 const PROVIDERS = [{
@@ -27,7 +29,7 @@ const PROVIDERS = [{
 export class TxComponent implements OnInit {
 
   /** RX as in received data **/
-  RX = null;
+  RX: string;
   mode = "determinate";
   color = "primary";
   valuesSubscription: Subscription;
@@ -37,12 +39,16 @@ export class TxComponent implements OnInit {
   constructor(
     public service: BleService,
     public snackBar: MatSnackBar,
-    private ref: ChangeDetectorRef) {
+    private NUS: NusDataService) {
   	service.config({
       decoder: (value: DataView) => value,
       service: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E".toLowerCase(),
       characteristic: "6E400003-B5A3-F393-E0A9-E50E24DCCA9E".toLowerCase()
     })
+  }
+
+  buf2hex(buffer: DataView): string {
+    return Array.prototype.map.call(new Uint8Array(buffer.buffer), x => ('00' + x.toString(16)).slice(-2)).join(':');
   }
 
 
@@ -70,8 +76,7 @@ export class TxComponent implements OnInit {
   }
 
   updateValue(value: DataView) {
-  	console.log("data");
-  	this.RX = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
+    this.NUS.receiveRx(value);
     this.mode = "determinate";
   }
 
@@ -94,5 +99,8 @@ export class TxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.NUS.currentRx.subscribe(rx => {
+      this.RX = this.buf2hex(rx);
+    });
   }
 }
