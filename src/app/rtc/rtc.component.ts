@@ -13,11 +13,15 @@ export class RtcComponent implements OnInit {
 
   /** TX as in transmitted data **/
   TX = null;
+  TXmode = "unknown";
   /** RX as in received data **/
   RX = null;
-  mode = "determinate";
-  color = "primary";
-  time: Date;
+  RXmode = "unknown"
+
+  
+  localTime: Date;
+  tagTime: Date;
+  parser: AngularRuuviEndpointsModule;
 
   destinations = Object.keys(RuuviEndpoint).filter((type) => isNaN(<any>type));
   sources = Object.keys(RuuviEndpoint).filter((type) => isNaN(<any>type));
@@ -27,20 +31,26 @@ export class RtcComponent implements OnInit {
   @Output() response: Observable<DataView>;
 
   constructor(private NUS: NusDataService) { 
-    
+    this.parser = new AngularRuuviEndpointsModule();
   }
 
   ngOnInit() {
+    let buffer = new ArrayBuffer(11);
+    this.RX = new DataView(buffer);
+    this.TX = new DataView(buffer);
   	this.NUS.currentTx.subscribe(tx => {
-      this.TX = tx;
+      if(RuuviEndpoint.Rtc == this.parser.destination(tx)){
+        this.TX = tx;
+        this.TXmode = "clean";
+        this.localTime = new Date(this.RX.getBigUint64(this.parser.payload(tx)));
+      }
     });
   	this.NUS.currentRx.subscribe(rx => {
-      let msg = new AngularRuuviEndpointsModule();
-      if(RuuviEndpoint.Rtc == msg.source(rx)){
+      if(RuuviEndpoint.Rtc == this.parser.source(rx)){
         this.RX = rx;
-        this.time = new Date(this.RX.getBigUint64(msg.payload()));
+        this.RXmode = "clean"
+        this.tagTime = new Date(this.RX.getBigUint64(this.parser.payload(rx)));
       }
     });
   }
-
 }

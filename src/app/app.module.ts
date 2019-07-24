@@ -21,6 +21,7 @@ import { FirmwareRevisionComponent } from './firmware-revision/firmware-revision
 import { ModelNumberComponent } from './model-number/model-number.component';
 import { RxComponent } from './rx/rx.component';
 import { TxComponent } from './tx/tx.component';
+import { Data2hexPipe } from './data2hex.pipe';
 
 
 
@@ -40,7 +41,8 @@ import { TxComponent } from './tx/tx.component';
     FirmwareRevisionComponent,
     ModelNumberComponent,
     RxComponent,
-    TxComponent
+    TxComponent,
+    Data2hexPipe
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,71 @@
-<p>
-  <select>
-    <option *ngFor="let destination of destinations">{{destination}}</option>
-  </select>
-  <select>
-	<option *ngFor="let source of sources">{{source}}</option>
-  </select>
-  <select>
-    <option *ngFor="let type of types">{{type}}</option>
-  </select>
-</p>
 
-<p>Current time: {{ time | date}}</p>
-<p>Set time:</p>
+<table>
+  <tr>
+    <td>Direction</td>
+    <td>Destination</td>
+    <td>Source</td>
+    <td>Type</td>
+    <td>Binary payload</td>
+    <td>Human readable</td>
+    <td>Action</td>
+    <td>State</td>
+  </tr>
+  <tr class="{{TXmode}}">
+    <td>>>></td>
+    <td>
+      <select>
+        <option *ngFor="let destination of destinations" [attr.selected]="destination=='Rtc' ? true : null" [attr.disabled]="destination!='Rtc' ? true : null">{{destination}}</option>    
+      </select>
+    </td>   
+    <td>
+      <select>
+        <option *ngFor="let source of sources" [attr.selected]="source=='Rtc' ? true : null" [attr.disabled]="source!='Rtc' ? true : null">{{source}}</option>
+      </select>
+    </td>
+    <td>
+      <select>
+        <option *ngFor="let type of types">{{type}}</option>
+      </select>
+    </td>
+    <td>
+      <span *ngFor="let byte of (TX | data2hex:3:8)">{{byte}} </span>
+    </td>
+    <td>
+      {{ localTime | date: 'hh:mm:ss a' }}
+    </td>
+    <td>
+      <button (click)="sendTX()">Send to device</button><button (click)="synchEpoch()">Get PC time</button>
+    </td>
+    <td>{{TXmode}}</td>
+  </tr>
+  <tr class="{{RXmode}}">
+    <td><<<</td>
+    <td>
+      <select [attr.disabled]="true">
+        <option *ngFor="let destination of destinations" [attr.selected]="destination=='Rtc' ? true : null" [attr.disabled]="destination!='Rtc' ? true : null">{{destination}}</option>    
+      </select>
+    </td>   
+    <td>
+      <select [attr.disabled]="true">
+        <option *ngFor="let source of sources" [attr.selected]="source=='Rtc' ? true : null" [attr.disabled]="source!='Rtc' ? true : null">{{source}}</option>
+      </select>
+    </td>
+    <td>
+      <select [attr.disabled]="true">
+        <option *ngFor="let type of types">{{type}}</option>
+      </select>
+    </td>
+    <td>
+      <span *ngFor="let byte of (RX | data2hex:3:8)">{{byte}} </span>
+    </td>
+    <td>
+      {{ tagTime | date: 'hh:mm:ss a' }}
+    </td>
+    <td>
+      <button (click)="requestValue()">Get from device</button>
+    </td>
+    <td>{{RXmode}}</td>
+  </tr>
+</table>
+
 
