@@ -25,8 +25,7 @@ const PROVIDERS = [{
 export class SerialNumberComponent implements OnInit {
 
   serial = null;
-  mode = "determinate";
-  color = "primary";
+  mode = "unknown";
   valuesSubscription: Subscription;
   streamSubscription: Subscription;
   deviceSubscription: Subscription;
@@ -46,10 +45,9 @@ export class SerialNumberComponent implements OnInit {
     this.deviceSubscription = this.service.getDevice()
       .subscribe(device => {
         if (device) {
-          this.mode = "determinate";
         } else {
           // device not connected or disconnected
-          this.mode = "indeterminate";
+          this.mode = "unknown";
           this.serial = null;
         }
       }, this.hasError.bind(this));
@@ -62,7 +60,7 @@ export class SerialNumberComponent implements OnInit {
 
   updateValue(value: DataView) {
   	this.serial = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
-    this.mode = "determinate";
+    this.mode = "clean";
   }
 
   disconnect() {
@@ -73,6 +71,7 @@ export class SerialNumberComponent implements OnInit {
   }
 
   hasError(error: string) {
+    this.mode = "dirty";
     this.snackBar.open(error, 'Close');
   }
 

@@ -25,8 +25,7 @@ const PROVIDERS = [{
 export class ManufacturerNameComponent implements OnInit {
 
   name = null;
-  mode = "determinate";
-  color = "primary";
+  mode = "unknown";
   valuesSubscription: Subscription;
   streamSubscription: Subscription;
   deviceSubscription: Subscription;
@@ -47,10 +46,9 @@ export class ManufacturerNameComponent implements OnInit {
     this.deviceSubscription = this.service.getDevice()
       .subscribe(device => {
         if (device) {
-          this.mode = "determinate";
         } else {
           // device not connected or disconnected
-          this.mode = "indeterminate";
+          this.mode = "unknown";
           this.name = null;
         }
       }, this.hasError.bind(this));
@@ -63,7 +61,7 @@ export class ManufacturerNameComponent implements OnInit {
 
   updateValue(value: DataView) {
   	this.name = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
-    this.mode = "determinate";
+    this.mode = "clean";
   }
 
   disconnect() {
@@ -74,6 +72,7 @@ export class ManufacturerNameComponent implements OnInit {
   }
 
   hasError(error: string) {
+    this.mode = "dirty";
     this.snackBar.open(error, 'Close');
   }
 

@@ -22,6 +22,8 @@ import { ModelNumberComponent } from './model-number/model-number.component';
 import { RxComponent } from './rx/rx.component';
 import { TxComponent } from './tx/tx.component';
 import { Data2hexPipe } from './data2hex.pipe';
+import { TypeSensorOffsetWriteComponent } from './type-sensor-offset-write/type-sensor-offset-write.component';
+import { TypeParserComponent } from './type-parser/type-parser.component';
 
 
 
@@ -42,7 +44,9 @@ import { Data2hexPipe } from './data2hex.pipe';
     ModelNumberComponent,
     RxComponent,
     TxComponent,
-    Data2hexPipe
+    Data2hexPipe,
+    TypeSensorOffsetWriteComponent,
+    TypeParserComponent
   ],
   imports: [
     BrowserModule,

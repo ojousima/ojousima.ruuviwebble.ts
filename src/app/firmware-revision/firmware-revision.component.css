@@ -1,0 +1,9 @@
+.unknown { 
+  color: gray;
+} 
+.clean {
+  color: green;
+}
+.dirty {
+  color: brown;
+}

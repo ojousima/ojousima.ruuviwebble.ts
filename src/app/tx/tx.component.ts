@@ -30,8 +30,7 @@ export class TxComponent implements OnInit {
 
   /** RX as in received data **/
   RX: string;
-  mode = "determinate";
-  color = "primary";
+  mode = "unknown";
   valuesSubscription: Subscription;
   streamSubscription: Subscription;
   deviceSubscription: Subscription;
@@ -56,10 +55,9 @@ export class TxComponent implements OnInit {
     this.deviceSubscription = this.service.getDevice()
       .subscribe(device => {
         if (device) {
-          this.mode = "determinate";
         } else {
           // device not connected or disconnected
-          this.mode = "indeterminate";
+          this.mode = "unknown";
           this.RX = null;
         }
       }, this.hasError.bind(this));
@@ -73,11 +71,12 @@ export class TxComponent implements OnInit {
   requestStream() {
     this.streamSubscription = this.service.stream()
       .subscribe(this.updateValue.bind(this), this.hasError.bind(this));
+      this.mode = "clean";
   }
 
   updateValue(value: DataView) {
     this.NUS.receiveRx(value);
-    this.mode = "determinate";
+    this.mode = "clean";
   }
 
   disconnect() {
@@ -88,7 +87,9 @@ export class TxComponent implements OnInit {
   }
 
   hasError(error: string) {
-    this.snackBar.open(error, 'Close');
+    this.mode = "dirty";
+    // TX is non-readable and triggers error
+    //this.snackBar.open(error, 'Close');
   }
 
   ngOnDestroy() {

@@ -13,12 +13,12 @@
   <tr class="{{TXmode}}">
     <td>>>></td>
     <td>
-      <select>
+      <select [attr.disabled]="true">
         <option *ngFor="let destination of destinations" [attr.selected]="destination=='Rtc' ? true : null" [attr.disabled]="destination!='Rtc' ? true : null">{{destination}}</option>    
       </select>
     </td>   
     <td>
-      <select>
+      <select [attr.disabled]="true">
         <option *ngFor="let source of sources" [attr.selected]="source=='Rtc' ? true : null" [attr.disabled]="source!='Rtc' ? true : null">{{source}}</option>
       </select>
     </td>
@@ -28,13 +28,13 @@
       </select>
     </td>
     <td>
-      <span *ngFor="let byte of (TX | data2hex:3:8)">{{byte}} </span>
+      <app-type-parser [data]=TX></app-type-parser>
     </td>
     <td>
-      {{ localTime | date: 'hh:mm:ss a' }}
+      {{ localTime | date: 'yyyy-MM-dd hh:mm:ss' }}
     </td>
     <td>
-      <button (click)="sendTX()">Send to device</button><button (click)="synchEpoch()">Get PC time</button>
+      <button (click)="sendTX()">Send to device</button><button (click)="synchEpoch()">Synch PC time</button>
     </td>
     <td>{{TXmode}}</td>
   </tr>
@@ -52,17 +52,16 @@
     </td>
     <td>
       <select [attr.disabled]="true">
-        <option *ngFor="let type of types">{{type}}</option>
+        <option *ngFor="let type of types" [attr.selected]="type=='RXcmd' ? true : null">{{type}}</option>
       </select>
     </td>
     <td>
-      <span *ngFor="let byte of (RX | data2hex:3:8)">{{byte}} </span>
+      <app-type-parser [data]=RX></app-type-parser>
     </td>
     <td>
-      {{ tagTime | date: 'hh:mm:ss a' }}
+      {{ tagTime | date: 'yyyy-MM-dd hh:mm:ss' }}
     </td>
     <td>
-      <button (click)="requestValue()">Get from device</button>
     </td>
     <td>{{RXmode}}</td>
   </tr>

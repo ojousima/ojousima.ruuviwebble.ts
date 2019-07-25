@@ -26,8 +26,7 @@ const PROVIDERS = [{
 export class FirmwareRevisionComponent implements OnInit {
 
   fwstring = null;
-  mode = "determinate";
-  color = "primary";
+  mode = "unknown";
   valuesSubscription: Subscription;
   streamSubscription: Subscription;
   deviceSubscription: Subscription;
@@ -47,10 +46,9 @@ export class FirmwareRevisionComponent implements OnInit {
     this.deviceSubscription = this.service.getDevice()
       .subscribe(device => {
         if (device) {
-          this.mode = "determinate";
         } else {
           // device not connected or disconnected
-          this.mode = "indeterminate";
+          this.mode = "unknown";
           this.fwstring = null;
         }
       }, this.hasError.bind(this));
@@ -63,7 +61,7 @@ export class FirmwareRevisionComponent implements OnInit {
 
   updateValue(value: DataView) {
   	this.fwstring = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
-    this.mode = "determinate";
+    this.mode = "clean";
   }
 
   disconnect() {
@@ -74,6 +72,7 @@ export class FirmwareRevisionComponent implements OnInit {
   }
 
   hasError(error: string) {
+    this.mode="dirty";
     this.snackBar.open(error, 'Close');
   }
 

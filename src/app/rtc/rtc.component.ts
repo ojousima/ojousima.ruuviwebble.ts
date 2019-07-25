@@ -12,11 +12,15 @@ import { AngularRuuviEndpointsModule, RuuviCommand, RuuviEndpoint } from 'angula
 export class RtcComponent implements OnInit {
 
   /** TX as in transmitted data **/
-  TX = null;
+  TX: DataView = null;
   TXmode = "unknown";
+  selectedDestination: String;
+  selectedSource: String;
+  selectedType: String
   /** RX as in received data **/
-  RX = null;
+  RX: DataView = null;
   RXmode = "unknown"
+  RXcmd: string;
 
   
   localTime: Date;
@@ -26,9 +30,20 @@ export class RtcComponent implements OnInit {
   destinations = Object.keys(RuuviEndpoint).filter((type) => isNaN(<any>type));
   sources = Object.keys(RuuviEndpoint).filter((type) => isNaN(<any>type));
   types = Object.keys(RuuviCommand).filter((type) => isNaN(<any>type));
+  typeValues = Object.values(RuuviCommand).filter((type) => isNaN(<any>type));
+  
 
-  @Input() data: Observable<DataView>;
-  @Output() response: Observable<DataView>;
+
+  sendTX(){
+    this.TX.setUint8(0, RuuviEndpoint.Rtc);
+    this.TX.setUint8(1, RuuviEndpoint.Rtc);
+    this.TX.setUint8(2, RuuviCommand.ValueRead);
+    this.NUS.sendTx(this.TX);
+  }
+
+  snychEpoch(){
+
+  }
 
   constructor(private NUS: NusDataService) { 
     this.parser = new AngularRuuviEndpointsModule();
@@ -42,14 +57,15 @@ export class RtcComponent implements OnInit {
       if(RuuviEndpoint.Rtc == this.parser.destination(tx)){
         this.TX = tx;
         this.TXmode = "clean";
-        this.localTime = new Date(this.RX.getBigUint64(this.parser.payload(tx)));
+        this.localTime = new Date(parseInt(this.parser.payload(tx).getBigUint64()));
       }
     });
   	this.NUS.currentRx.subscribe(rx => {
       if(RuuviEndpoint.Rtc == this.parser.source(rx)){
         this.RX = rx;
         this.RXmode = "clean"
-        this.tagTime = new Date(this.RX.getBigUint64(this.parser.payload(rx)));
+        this.tagTime = new Date(parseInt(this.parser.payload(rx).getBigUint64()));
+        this.RXcmd = RuuviCommand[this.parser.type(rx)];
       }
     });
   }

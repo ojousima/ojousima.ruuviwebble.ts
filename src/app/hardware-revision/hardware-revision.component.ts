@@ -25,8 +25,7 @@ const PROVIDERS = [{
 export class HardwareRevisionComponent implements OnInit {
 
   hwstring = null;
-  mode = "determinate";
-  color = "primary";
+  mode = "unknown";
   valuesSubscription: Subscription;
   streamSubscription: Subscription;
   deviceSubscription: Subscription;
@@ -46,10 +45,10 @@ export class HardwareRevisionComponent implements OnInit {
     this.deviceSubscription = this.service.getDevice()
       .subscribe(device => {
         if (device) {
-          this.mode = "determinate";
+          this.mode = "dirty";
         } else {
           // device not connected or disconnected
-          this.mode = "indeterminate";
+          this.mode = "unknown";
           this.hwstring = null;
         }
       }, this.hasError.bind(this));
@@ -62,7 +61,7 @@ export class HardwareRevisionComponent implements OnInit {
 
   updateValue(value: DataView) {
   	this.hwstring = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
-    this.mode = "determinate";
+    this.mode = "clean";
   }
 
   disconnect() {
@@ -73,6 +72,7 @@ export class HardwareRevisionComponent implements OnInit {
   }
 
   hasError(error: string) {
+    this.mode = "dirty";
     this.snackBar.open(error, 'Close');
   }
 

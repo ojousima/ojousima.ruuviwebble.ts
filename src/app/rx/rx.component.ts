@@ -29,8 +29,8 @@ export class RxComponent implements OnInit {
 
   /** TX as in transmitted data **/
   TX = null;
-  mode = "determinate";
-  color = "primary";
+  TXstring: String[];
+  mode = "unknown";
   valuesSubscription: Subscription;
   streamSubscription: Subscription;
   deviceSubscription: Subscription;
@@ -51,10 +51,9 @@ export class RxComponent implements OnInit {
     this.deviceSubscription = this.service.getDevice()
       .subscribe(device => {
         if (device) {
-          this.mode = "determinate";
         } else {
           // device not connected or disconnected
-          this.mode = "indeterminate";
+          this.mode = "unknown";
           this.TX = null;
         }
       }, this.hasError.bind(this));
@@ -80,12 +79,13 @@ export class RxComponent implements OnInit {
   }
 
   sendValue(str) {
+    this.mode = "clean";
     this.service.send(this.str2ab(str));
   }
 
   updateValue(value: DataView) {
   	this.TX = String.fromCharCode.apply(null, new Uint8Array(value.buffer));
-    this.mode = "determinate";
+    this.mode = "clean";
   }
 
   disconnect() {
@@ -96,7 +96,9 @@ export class RxComponent implements OnInit {
   }
 
   hasError(error: string) {
-    this.snackBar.open(error, 'Close');
+    this.mode = "dirty";
+    // Error gets thrown as RX is non-readable.
+    //this.snackBar.open(error, 'Close');
   }
 
   ngOnDestroy() {
@@ -107,6 +109,10 @@ export class RxComponent implements OnInit {
   }
 
   ngOnInit() {
-  	this.txSource.currentTx.subscribe(tx => this.TX = tx);
+    this.txSource.currentTx.subscribe(tx => {
+      this.service.send(tx.buffer);
+      this.mode = "clean";
+      this.TX = tx;
+    });
   }
 }

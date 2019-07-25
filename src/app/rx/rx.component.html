@@ -1,5 +1,6 @@
-<p> Transmit
-  <input #TXdata ng-maxlength="20">
+<p class="{{mode}}"> Transmit:
+  <span ="let byte of (TX | data2hex); let i=index">
+  0x<input [(ngModel)]="TXstring[i]" type="text" />:
   <button (click)="requestValue()">Connect</button>
   <button (click)="sendValue(TXdata.value)" >Send</button>
 </p>
