@@ -41,7 +41,7 @@ export class RtcComponent implements OnInit {
     this.NUS.sendTx(this.TX);
   }
 
-  snychEpoch(){
+  synchEpoch(){
 
   }
 

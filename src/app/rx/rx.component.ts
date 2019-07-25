@@ -78,9 +78,9 @@ export class RxComponent implements OnInit {
   return buf;
   }
 
-  sendValue(str) {
+  sendValue() {
     this.mode = "clean";
-    this.service.send(this.str2ab(str));
+    this.service.send(this.TX);
   }
 
   updateValue(value: DataView) {
