@@ -57,14 +57,14 @@ export class RtcComponent implements OnInit {
       if(RuuviEndpoint.Rtc == this.parser.destination(tx)){
         this.TX = tx;
         this.TXmode = "clean";
-        this.localTime = new Date(parseInt(this.parser.payload(tx).getBigUint64()));
+        this.localTime = new Date(this.parser.payload(tx).getUint16(2)*2^32 + this.parser.payload(tx).getUint32(4));
       }
     });
   	this.NUS.currentRx.subscribe(rx => {
       if(RuuviEndpoint.Rtc == this.parser.source(rx)){
         this.RX = rx;
         this.RXmode = "clean"
-        this.tagTime = new Date(parseInt(this.parser.payload(rx).getBigUint64()));
+        this.tagTime = new Date(this.parser.payload(rx).getUint16(2)*2^32 + this.parser.payload(rx).getUint32(4));
         this.RXcmd = RuuviCommand[this.parser.type(rx)];
       }
     });

@@ -98,7 +98,7 @@ export class RxComponent implements OnInit {
   hasError(error: string) {
     this.mode = "dirty";
     // Error gets thrown as RX is non-readable.
-    //this.snackBar.open(error, 'Close');
+    // this.snackBar.open(error, 'Close');
   }
 
   ngOnDestroy() {
@@ -110,8 +110,12 @@ export class RxComponent implements OnInit {
 
   ngOnInit() {
     this.txSource.currentTx.subscribe(tx => {
-      this.service.send(tx.buffer);
-      this.mode = "clean";
+      // As currentTX is a behaviorsubject,
+      // this tries to send data before connection is made. Check status
+      if(this.mode === "dirty" || this.mode === "clean"){
+        this.service.send(tx.buffer);
+        this.mode = "clean";
+      }
       this.TX = tx;
     });
   }
