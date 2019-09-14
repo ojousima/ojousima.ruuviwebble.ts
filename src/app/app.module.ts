@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { ChartsModule } from 'ng2-charts';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingModule } from './modules/app-routing.module';
@@ -24,8 +25,6 @@ import { TxComponent } from './tx/tx.component';
 import { Data2hexPipe } from './data2hex.pipe';
 import { TypeSensorOffsetWriteComponent } from './type-sensor-offset-write/type-sensor-offset-write.component';
 import { TypeParserComponent } from './type-parser/type-parser.component';
-
-
 
 @NgModule({
   declarations: [
@@ -56,6 +55,7 @@ import { TypeParserComponent } from './type-parser/type-parser.component';
     WebBluetoothModule.forRoot({
       enableTracing: true // or false, this will enable logs in the browser's console
     }),
+    ChartsModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,

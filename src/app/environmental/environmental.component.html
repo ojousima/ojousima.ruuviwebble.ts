@@ -1,1 +1,25 @@
-<p>environmental works!</p>
+<button (click)="readTemperature()">Read temperature logs</button> 
+<button (click)="readHumidity()">Read humidity logs</button>
+<button (click)="readPressure()">Read pressure logs</button>
+<button (click)="readEnvironmental()">Read environmental logs</button>
+<button (click)="clearHistory()">Clear humidity and temperature logs</button>
+<div style="height:300px;width:600px;">
+  <div style="display: block" *ngIf="trhChartShow">
+    <canvas baseChart id="trhChart"
+            [datasets]="trhChartData"
+            [options]="trhChartOptions"
+            [legend]="trhChartLegend"
+            [chartType]="trhChartType">
+    </canvas>
+  </div>
+</div>
+<div style="height:300px;width:600px;">
+  <div style="display: block" *ngIf="pressureChartShow">
+    <canvas baseChart id="pressureChart"
+            [datasets]="pressureChartData"
+            [options]="pressureChartOptions"
+            [legend]="pressureChartLegend"
+            [chartType]="pressureChartType">
+    </canvas>
+  </div>
+</div>
