@@ -188,7 +188,8 @@ export class EnvironmentalComponent implements OnInit {
         type: 'time',
         position: 'bottom',
         time: {
-          max: undefined
+          max: undefined,
+          min: undefined
          }
       }]
     },
