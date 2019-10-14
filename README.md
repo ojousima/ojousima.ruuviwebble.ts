@@ -1,6 +1,7 @@
 # OjousimaRuuviwebbleTs
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
+Communicate with RuuviTags over NUS. This project is just a development aid for Ruuvi Firmware, no support is given.
 
 ## Development server
 
